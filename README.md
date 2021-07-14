@@ -1,1 +1,4 @@
-# fjord-sinatra-memo-app
+# Sinatraメモアプリ
+## 概要
+Sinatraで作成されたシンプルなメモアプリです。
+## 手順
