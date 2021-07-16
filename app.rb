@@ -8,6 +8,8 @@ require 'active_support/all'
 
 JSON_FILE = 'db/memos.json'
 
+enable :method_override
+
 before do
   unless File.exist?(JSON_FILE)
     File.open(JSON_FILE, 'w') do |file|
@@ -28,10 +30,12 @@ get '/memos' do
 end
 
 get '/memos/new' do
+  @memo = {}
   erb :form
 end
 
 get '/memos/:id' do
+  @memo = @memos.find { |m| m['id'] == params[:id].to_i }
   erb :show
 end
 
@@ -44,24 +48,44 @@ post '/memos' do
   memo['updated_at'] = Time.now.to_s
   memo['deleted_at'] = nil
 
-  dump_memos = {}
-  dump_memos['memos'] = current_memos.push(memo)
+  new_memos = {}
+  new_memos['memos'] = @memos.push(memo)
   File.open(JSON_FILE, 'w') do |file|
-    JSON.dump(dump_memos, file)
+    JSON.dump(new_memos, file)
   end
 
-  @memos = dump_memos['memos']
-  erb :index
+  redirect '/memos'
 end
 
 get '/memos/:id/edit' do
+  @memo = @memos.find { |m| m['id'] == params[:id].to_i }
   erb :form
 end
 
 patch '/memos/:id' do
-  erb :index
+  memo = @memos.find { |m| m['id'] == params[:id].to_i }
+  memo['title'] = params[:title]
+  memo['memo'] = params[:memo]
+  memo['updated_at'] = Time.now.to_s
+
+  update_memos = {}
+  update_memos['memos'] = @memos
+  File.open(JSON_FILE, 'w') do |file|
+    JSON.dump(update_memos, file)
+  end
+
+  redirect '/memos'
 end
 
 delete '/memos/:id' do
-  erb :index
+  memo = @memos.find { |m| m['id'] == params[:id].to_i }
+  memo['deleted_at'] = Time.now.to_s
+
+  update_memos = {}
+  update_memos['memos'] = @memos
+  File.open(JSON_FILE, 'w') do |file|
+    JSON.dump(update_memos, file)
+  end
+
+  redirect '/memos'
 end
