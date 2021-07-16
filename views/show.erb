@@ -1,1 +1,11 @@
-show test
+<%=@memo['title']%>
+<%=@memo['memo']%>
+
+<div>
+  <button><a href="/memos/<%=@memo['id']%>/edit">変更</a></button>
+
+  <form action="/memos/<%=@memo['id']%>" method="post" class="form-memo">
+    <input type="hidden" name='_method', value='DELETE' />
+    <input type="submit" value="削除"/>
+  </form>
+</div>
