@@ -8,7 +8,7 @@ require 'active_support/all'
 
 JSON_FILE = 'db/memos.json'
 
-get '/memos' do
+before do
   unless File.exist?(JSON_FILE)
     File.open(JSON_FILE, 'w') do |file|
       hash = { 'memos' => [] }
@@ -21,6 +21,9 @@ get '/memos' do
     hash = JSON.parse(file.read)
     @memos = hash['memos'] if hash.present?
   end
+end
+
+get '/memos' do
   erb :index
 end
 
@@ -33,14 +36,8 @@ get '/memos/:id' do
 end
 
 post '/memos' do
-  current_memos = []
-  File.open(JSON_FILE) do |file|
-    hash = JSON.parse(file.read)
-    current_memos = hash['memos']
-  end
-
   memo = {}
-  memo['id'] = current_memos.present? ? current_memos.last['id'] + 1 : 1
+  memo['id'] = @memos.present? ? @memos.last['id'] + 1 : 1
   memo['title'] = params[:title]
   memo['memo'] = params[:memo]
   memo['created_at'] = Time.now.to_s
