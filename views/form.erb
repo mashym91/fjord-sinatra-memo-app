@@ -1,13 +1,16 @@
-<form action="/memos" method="post" class="form-memo">
+<form action="/memos<%= @memo.empty? ? nil : "/#{@memo['id']}" %>" method="post" class="form-memo">
+  <% unless @memo.empty? %>
+    <input type="hidden" name='_method', value='PATCH' />
+  <% end %>
   <div class="form-memo">
     <label for="title">タイトル: </label>
-    <input type="text" name="title" id="title" required>
+    <input type="text" name="title" id="title" required value=<%=@memo['title']%>>
   </div>
   <div class="form-memo">
     <label for="memo">内容: </label>
-    <textarea name="memo" id="memo" required></textarea>
+    <textarea name="memo" id="memo" required><%=@memo['memo']%></textarea>
   </div>
   <div class="form-memo">
-    <input type="submit" value="保存">
+    <input type="submit" value=<%= @memo.empty? ? "保存" : "更新" %>>
   </div>
 </form>
