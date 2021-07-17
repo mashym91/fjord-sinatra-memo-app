@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/sinatra/sinatra
+  revision: 0a50b5608d3ff4fda563cc3d3a600d581c57d8e0
+  specs:
+    rack-protection (2.1.0)
+      rack
+    sinatra (2.1.0)
+      mustermann (~> 1.0)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
+      tilt (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -20,8 +32,6 @@ GEM
     parser (3.0.2.0)
       ast (~> 2.4.1)
     rack (2.2.3)
-    rack-protection (2.1.0)
-      rack
     rainbow (3.0.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
@@ -43,12 +53,7 @@ GEM
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
     ruby-progressbar (1.11.0)
-    ruby2_keywords (0.0.4)
-    sinatra (2.1.0)
-      mustermann (~> 1.0)
-      rack (~> 2.2)
-      rack-protection (= 2.1.0)
-      tilt (~> 2.0)
+    ruby2_keywords (0.0.5)
     sinatra-contrib (2.1.0)
       multi_json
       mustermann (~> 1.0)
@@ -69,7 +74,7 @@ DEPENDENCIES
   activesupport
   byebug
   rubocop-fjord
-  sinatra
+  sinatra!
   sinatra-contrib
   webrick
 
