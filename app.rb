@@ -6,7 +6,15 @@ require 'json'
 require 'byebug'
 require 'active_support/all'
 
-JSON_FILE = 'db/memos.json'
+configure :development, :production do
+  set :json_file, 'db/memos.json'
+end
+
+configure :test do
+  set :json_file, 'db/test_memos.json'
+end
+
+JSON_FILE = settings.json_file
 
 enable :method_override
 

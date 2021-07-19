@@ -13,3 +13,8 @@ gem 'webrick'
 group :development do
   gem 'rubocop-fjord', require: false
 end
+
+group :test do
+  gem 'minitest'
+  gem 'rack-test'
+end
