@@ -4,8 +4,8 @@
 <div>
   <button><a href="/memos/<%=@memo['id']%>/edit">変更</a></button>
 
-  <form action="/memos/<%=@memo['id']%>" method="post" class="form-memo">
+  <form action="/memos/<%=@memo['id']%>" method="post" class="form-memo" onSubmit="return confirmDelete()">
     <input type="hidden" name='_method', value='DELETE' />
-    <input type="submit" value="削除"/>
+    <input type="submit" value="削除" />
   </form>
 </div>
