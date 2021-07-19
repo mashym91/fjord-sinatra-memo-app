@@ -33,6 +33,12 @@ before do
   end
 end
 
+def write_memos(memos)
+  File.open(JSON_FILE, 'w') do |file|
+    JSON.dump(memos, file)
+  end
+end
+
 get '/memos' do
   erb :index
 end
@@ -58,9 +64,7 @@ post '/memos' do
 
   new_memos = {}
   new_memos['memos'] = @memos.push(memo)
-  File.open(JSON_FILE, 'w') do |file|
-    JSON.dump(new_memos, file)
-  end
+  write_memos(new_memos)
 
   redirect '/memos'
 end
@@ -78,9 +82,7 @@ patch '/memos/:id' do
 
   update_memos = {}
   update_memos['memos'] = @memos
-  File.open(JSON_FILE, 'w') do |file|
-    JSON.dump(update_memos, file)
-  end
+  write_memos(update_memos)
 
   redirect '/memos'
 end
@@ -91,9 +93,7 @@ delete '/memos/:id' do
 
   update_memos = {}
   update_memos['memos'] = @memos
-  File.open(JSON_FILE, 'w') do |file|
-    JSON.dump(update_memos, file)
-  end
+  write_memos(update_memos)
 
   redirect '/memos'
 end
