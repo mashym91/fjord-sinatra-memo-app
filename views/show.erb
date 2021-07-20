@@ -1,5 +1,5 @@
-<%=@memo['title']%>
-<%=@memo['memo']%>
+<div><%=@memo['title']%></div>
+<div><%=@memo['memo'].gsub(/\n/,"<br>")%></div>
 
 <div>
   <button><a href="/memos/<%=@memo['id']%>/edit">変更</a></button>
