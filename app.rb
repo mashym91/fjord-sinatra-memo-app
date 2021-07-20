@@ -6,11 +6,7 @@ require 'json'
 require 'byebug'
 require 'active_support/all'
 
-JSON_FILE = if settings.test?
-              'db/test_memos.json'
-            else
-              'db/memos.json'
-end
+JSON_FILE = settings.test? ? 'db/test_memos.json' : 'db/memos.json'
 
 enable :method_override
 
