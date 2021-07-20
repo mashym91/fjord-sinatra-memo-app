@@ -14,6 +14,10 @@ helpers do
   alias_method :h, :escape_html
 end
 
+error 404 do
+  erb :error_not_found
+end
+
 before do
   unless File.exist?(JSON_FILE)
     File.open(JSON_FILE, 'w') do |file|
