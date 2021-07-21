@@ -66,8 +66,6 @@ class Memo
 
   private
 
-  def validate; end
-
   def write_memos(memos)
     File.open(JSON_FILE, 'w') do |file|
       JSON.dump(memos, file)
