@@ -22,7 +22,7 @@ class AppTest < Minitest::Test
     return if File.exist?(JSON_FILE)
 
     File.open(JSON_FILE, 'w') do |file|
-      hash = { "memos": [{ "id": 1, "title": 'テストタイトル', "memo": 'テストメモ', "created_at": Time.now, "updated_at": Time.now }] }
+      hash = { "memos": [{ "id": 1, "title": 'テストタイトル', "body": 'テストメモ', "created_at": Time.now, "updated_at": Time.now }] }
       JSON.dump(hash, file)
     end
   end
@@ -54,7 +54,7 @@ class AppTest < Minitest::Test
   end
 
   def test_expect_post_memos
-    post '/memos', { title: 'テストタイトル', memo: 'テストメモ' }
+    post '/memos', { title: 'テストタイトル', body: 'テストメモ' }
     assert last_request.post?
 
     memos = []
@@ -63,7 +63,7 @@ class AppTest < Minitest::Test
       memos = hash['memos'] if hash.present?
     end
     assert_equal memos.last['title'], 'テストタイトル'
-    assert_equal memos.last['memo'], 'テストメモ'
+    assert_equal memos.last['body'], 'テストメモ'
     follow_redirect!  # 明示的にリダイレクト
     assert_equal '/memos', last_request.path_info
     delete_data_file
@@ -79,7 +79,7 @@ class AppTest < Minitest::Test
 
   def test_expect_patch_memos
     create_data
-    patch '/memos/1', { _method: 'PATCH', title: '更新テストタイトル', memo: '更新テストメモ' }
+    patch '/memos/1', { _method: 'PATCH', title: '更新テストタイトル', body: '更新テストメモ' }
     assert last_request.patch?
 
     memos = []
@@ -89,7 +89,7 @@ class AppTest < Minitest::Test
     end
 
     assert_equal memos.last['title'], '更新テストタイトル'
-    assert_equal memos.last['memo'], '更新テストメモ'
+    assert_equal memos.last['body'], '更新テストメモ'
     follow_redirect!  # 明示的にリダイレクト
     assert_equal '/memos', last_request.path_info
     delete_data_file

@@ -4,11 +4,11 @@
   <% end %>
   <div class="form-memo">
     <label for="title">タイトル: </label>
-    <input type="text" name="title" id="title" required value=<%=@memo['title']%>>
+    <input type="text" name="title" id="title" value=<%= @memo['title'] %>>
   </div>
   <div class="form-memo">
-    <label for="memo">内容: </label>
-    <textarea name="memo" id="memo" required><%=@memo['memo']%></textarea>
+    <label for="body">内容: </label>
+    <textarea name="body" id="body"><%= @memo['body'] %></textarea>
   </div>
   <div class="form-memo">
     <input type="submit" value=<%= @memo.empty? ? "保存" : "更新" %>>
