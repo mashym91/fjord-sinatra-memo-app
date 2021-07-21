@@ -2,11 +2,9 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-require 'json'
 require 'byebug'
 require 'active_support/all'
-
-JSON_FILE = settings.test? ? 'db/test_memos.json' : 'db/memos.json'
+require_relative 'memo'
 
 enable :method_override
 
@@ -18,28 +16,8 @@ error 404 do
   erb :error_not_found
 end
 
-before do
-  unless File.exist?(JSON_FILE)
-    File.open(JSON_FILE, 'w') do |file|
-      hash = { 'memos' => [] }
-      JSON.dump(hash, file)
-    end
-  end
-
-  @memos = []
-  File.open(JSON_FILE, 'r') do |file|
-    hash = JSON.parse(file.read)
-    @memos = hash['memos'] if hash.present?
-  end
-end
-
-def write_memos(memos)
-  File.open(JSON_FILE, 'w') do |file|
-    JSON.dump(memos, file)
-  end
-end
-
 get '/memos' do
+  @memos = Memo.all
   erb :index
 end
 
@@ -49,51 +27,33 @@ get '/memos/new' do
 end
 
 get '/memos/:id' do
-  @memo = @memos.find { |m| m['id'] == params[:id].to_i }
-  erb :show
+  @memo = Memo.find(params[:id])
+
+  erb @memo ? :show : :error_not_found
 end
 
 post '/memos' do
-  memo = {}
-  memo['id'] = @memos.present? ? @memos.last['id'] + 1 : 1
-  memo['title'] = h params[:title]
-  memo['memo'] = h params[:memo]
-  memo['created_at'] = Time.now.to_s
-  memo['updated_at'] = Time.now.to_s
-  memo['deleted_at'] = nil
-
-  new_memos = {}
-  new_memos['memos'] = @memos.push(memo)
-  write_memos(new_memos)
+  memo = Memo.new({ title: h(params[:title]), body: h(params[:body]) })
+  memo.save
 
   redirect '/memos'
 end
 
 get '/memos/:id/edit' do
-  @memo = @memos.find { |m| m['id'] == params[:id].to_i }
+  @memo = Memo.find(params[:id])
   erb :form
 end
 
 patch '/memos/:id' do
-  memo = @memos.find { |m| m['id'] == params[:id].to_i }
-  memo['title'] = h params[:title]
-  memo['memo'] = h params[:memo]
-  memo['updated_at'] = Time.now.to_s
-
-  update_memos = {}
-  update_memos['memos'] = @memos
-  write_memos(update_memos)
+  memo = Memo.new({ id: params[:id].to_i, title: h(params[:title]), body: h(params[:body]) })
+  memo.update
 
   redirect '/memos'
 end
 
 delete '/memos/:id' do
-  memo = @memos.find { |m| m['id'] == params[:id].to_i }
-  memo['deleted_at'] = Time.now.to_s
-
-  update_memos = {}
-  update_memos['memos'] = @memos
-  write_memos(update_memos)
+  memo = Memo.new({ id: params[:id].to_i })
+  memo.destroy
 
   redirect '/memos'
 end
