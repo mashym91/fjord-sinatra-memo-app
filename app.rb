@@ -10,7 +10,7 @@ enable :method_override
 
 def validate_ok?(params)
   return true if params[:title].present?
-  
+
   @error_message = 'タイトルは必須です'
   false
 end
