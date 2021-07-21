@@ -8,6 +8,12 @@ require_relative 'memo'
 
 enable :method_override
 
+def validate_ok?(params)
+  return true if params[:title].present?
+  @error_message = 'タイトルは必須です'
+  false
+end
+
 helpers do
   alias_method :h, :escape_html
 end
@@ -33,10 +39,16 @@ get '/memos/:id' do
 end
 
 post '/memos' do
-  memo = Memo.new({ title: h(params[:title]), body: h(params[:body]) })
-  memo.save
+  if validate_ok?(params)
+    memo = Memo.new({ title: h(params[:title]), body: h(params[:body]) })
+    memo.save
 
-  redirect '/memos'
+    redirect '/memos'
+  else
+    @memo = {}
+    @memo['body'] = params[:body]
+    erb :form
+  end
 end
 
 get '/memos/:id/edit' do
@@ -45,10 +57,17 @@ get '/memos/:id/edit' do
 end
 
 patch '/memos/:id' do
-  memo = Memo.new({ id: params[:id].to_i, title: h(params[:title]), body: h(params[:body]) })
-  memo.update
+  if validate_ok?(params)
+    memo = Memo.new({ id: params[:id].to_i, title: h(params[:title]), body: h(params[:body]) })
+    memo.update
 
-  redirect '/memos'
+    redirect '/memos'
+  else
+    @memo = {}
+    @memo['id'] = params[:id]
+    @memo['body'] = params[:body]
+    erb :form
+  end
 end
 
 delete '/memos/:id' do
