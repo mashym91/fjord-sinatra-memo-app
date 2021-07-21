@@ -7,7 +7,6 @@ class Memo
     @memo = memo_params
   end
 
-  # 一覧取得
   def self.all
     unless File.exist?(JSON_FILE)
       File.open(JSON_FILE, 'w') do |file|
@@ -28,7 +27,6 @@ class Memo
     all.find { |m| m['id'] == id.to_i }
   end
 
-  # 保存
   def save
     memos = Memo.all
     @memo['id'] = memos.present? ? memos.last['id'] + 1 : 1
