@@ -1,5 +1,9 @@
-<form action="/memos<%= @memo.empty? ? nil : "/#{@memo['id']}" %>" method="post" class="form-memo">
-  <% unless @memo.empty? %>
+<% if @error_message %>
+  <div><%= @error_message %></div>
+<% end %>
+
+<form action="/memos<%= @memo['id'].blank? ? nil : "/#{@memo['id']}" %>" method="post" class="form-memo">
+  <% unless @memo['id'].blank? %>
     <input type="hidden" name='_method', value='PATCH' />
   <% end %>
   <div class="form-memo">
@@ -11,6 +15,6 @@
     <textarea name="body" id="body"><%= @memo['body'] %></textarea>
   </div>
   <div class="form-memo">
-    <input type="submit" value=<%= @memo.empty? ? "保存" : "更新" %>>
+    <input type="submit" value=<%= @memo['id'].blank? ? "保存" : "更新" %>>
   </div>
 </form>
