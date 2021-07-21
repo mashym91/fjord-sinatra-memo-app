@@ -27,7 +27,7 @@ class Memo
   def self.find(id)
     all.find { |m| m['id'] == id.to_i }
   end
-  
+
   # 保存
   def save
     memos = Memo.all
@@ -38,7 +38,7 @@ class Memo
 
     new_memos = {}
     new_memos['memos'] = memos.push(@memo)
-    self.write_memos(new_memos)
+    write_memos(new_memos)
   end
 
   def update
@@ -66,9 +66,7 @@ class Memo
 
   private
 
-  def validate
-
-  end
+  def validate; end
 
   def write_memos(memos)
     File.open(JSON_FILE, 'w') do |file|
