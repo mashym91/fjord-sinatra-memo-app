@@ -1,7 +1,10 @@
+<% if flash[:message]  %>
+  <div class="alert alert-primary" role="alert"><%= flash[:message] %></div>
+<% end %>
 <ul>
   <% @memos.each do |memo| %>
     <% next unless memo['deleted_at'].nil? %>
-    <li><a href="/memos/<%=memo['id']%>"><%=memo['title']%></a></li>
+    <li><a href="/memos/<%= memo['id'] %>"><%= memo['title'] %></a></li>
   <% end %>
 </ul>
 

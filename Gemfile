@@ -8,6 +8,7 @@ gem 'activesupport'
 gem 'byebug'
 gem 'sinatra', github: 'sinatra/sinatra'
 gem 'sinatra-contrib'
+gem 'sinatra-flash'
 gem 'webrick'
 
 group :development do

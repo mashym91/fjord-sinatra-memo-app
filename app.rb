@@ -2,16 +2,18 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
+require 'sinatra/flash'
 require 'byebug'
 require 'active_support/all'
 require_relative 'memo'
 
 enable :method_override
+enable :sessions
 
 def validate_ok?(params)
   return true if params[:title].present?
 
-  @error_message = 'タイトルを入力してください'
+  flash.now[:error] = 'タイトルを入力してください'
   false
 end
 
@@ -44,6 +46,7 @@ post '/memos' do
     memo = Memo.new({ title: h(params[:title]), body: h(params[:body]) })
     memo.save
 
+    flash[:message] = '登録しました'
     redirect '/memos'
   else
     @memo = {}
@@ -62,6 +65,7 @@ patch '/memos/:id' do
     memo = Memo.new({ id: params[:id].to_i, title: h(params[:title]), body: h(params[:body]) })
     memo.update
 
+    flash[:message] = '更新しました'
     redirect '/memos'
   else
     @memo = {}
@@ -75,5 +79,6 @@ delete '/memos/:id' do
   memo = Memo.new({ id: params[:id].to_i })
   memo.destroy
 
+  flash[:message] = '削除しました'
   redirect '/memos'
 end

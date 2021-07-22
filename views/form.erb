@@ -1,5 +1,5 @@
-<% if @error_message %>
-  <div><%= @error_message %></div>
+<% if flash[:error]  %>
+  <div class="alert alert-danger" role="alert"><%= flash[:error] %></div>
 <% end %>
 
 <form action="/memos<%= @memo['id'].blank? ? nil : "/#{@memo['id']}" %>" method="post" class="form-memo">
