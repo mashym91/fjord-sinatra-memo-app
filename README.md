@@ -15,6 +15,7 @@ Sinatraで作成されたシンプルなメモアプリです。
  
 ```
 $ git clone https://github.com/mashym91/fjord-sinatra-memo-app.git
+$ cd fjord-sinatra-memo-app 
 $ bundle install
 $ bundle exec ruby app.rb
 ```
