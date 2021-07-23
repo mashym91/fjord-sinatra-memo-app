@@ -1,0 +1,20 @@
+<% if flash[:message]  %>
+  <div class="alert alert-dark" role="alert" aria-live="assertive"><%= flash[:message] %></div>
+<% end %>
+
+<div class="row py-2">
+  <div class="d-grid gap-2 col-12 col-sm-6 mx-auto">
+    <a class="btn btn-outline-dark" href="/memos/new" role="button">メモを追加する</a>
+  </div>
+</div>
+
+<div class="row py-2">
+  <ul class="list-group list-group-flush">
+    <% @memos.each do |memo| %>
+      <% next unless memo['deleted_at'].nil? %>
+      <li class="list-group-item justify-content-between"><a class="link-dark" href="/memos/<%= memo['id'] %>"><%= memo['title'] %></a></li>
+    <% end %>
+  </ul>
+</div>
+
+

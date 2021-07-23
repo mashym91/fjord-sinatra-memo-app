@@ -1,0 +1,25 @@
+<% if flash[:error]  %>
+  <div class="alert alert-danger" role="alert" aria-live="assertive"><%= flash[:error] %></div>
+<% end %>
+
+<form action="/memos<%= @memo['id'].nil? ? nil : "/#{@memo['id']}" %>" method="post" class="form-memo">
+  <% unless @memo['id'].nil? %>
+    <input type="hidden" name='_method', value='PATCH' />
+  <% end %>
+  <div class="row">
+    <div class="col-12">
+      <label for="title" class="form-label">タイトル <span class="badge bg-light text-dark">必須</span></label>
+      <input type="text" class="form-control" name="title" id="title" value=<%= @memo['title'] %>>
+    </div>
+    <div class="col-12 mt-2">
+      <label for="body" class="form-label">内容</label>
+      <textarea class="form-control" name="body" id="body" rows="10"><%= @memo['body'] %></textarea>
+    </div>
+  </div>
+
+  <div class="row py-4">
+    <div class="d-grid gap-2 col-12 col-sm-6 mx-auto">
+      <input type="submit" value="メモを<%= @memo['id'].nil? ? '保存' : '更新' %>する" class="btn btn-dark">
+    </div>
+  </div>
+</form>
