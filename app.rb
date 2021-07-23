@@ -3,7 +3,6 @@
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/flash'
-require 'byebug'
 require_relative 'memo'
 
 enable :method_override
