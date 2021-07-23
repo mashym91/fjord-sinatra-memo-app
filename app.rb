@@ -5,6 +5,8 @@ require 'sinatra/reloader'
 require 'sinatra/flash'
 require_relative 'memo'
 
+JSON_FILE = settings.test? ? 'data/test_memos.json' : 'data/memos.json'
+
 enable :method_override
 enable :sessions
 

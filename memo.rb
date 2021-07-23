@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-JSON_FILE = settings.test? ? 'data/test_memos.json' : 'data/memos.json'
-
 class Memo
   def initialize(memo_params)
     @memo = memo_params
