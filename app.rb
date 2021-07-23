@@ -4,14 +4,13 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sinatra/flash'
 require 'byebug'
-require 'active_support/all'
 require_relative 'memo'
 
 enable :method_override
 enable :sessions
 
 def validate_ok?(params)
-  return true if params[:title].present?
+  return true if params[:title].nil? == false && params[:title].empty? == false
 
   flash.now[:error] = 'タイトルを入力してください'
   false

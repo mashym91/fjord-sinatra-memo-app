@@ -2,8 +2,8 @@
   <div class="alert alert-danger" role="alert" aria-live="assertive"><%= flash[:error] %></div>
 <% end %>
 
-<form action="/memos<%= @memo['id'].blank? ? nil : "/#{@memo['id']}" %>" method="post" class="form-memo">
-  <% unless @memo['id'].blank? %>
+<form action="/memos<%= @memo['id'].nil? ? nil : "/#{@memo['id']}" %>" method="post" class="form-memo">
+  <% unless @memo['id'].nil? %>
     <input type="hidden" name='_method', value='PATCH' />
   <% end %>
   <div class="row">
@@ -19,7 +19,7 @@
 
   <div class="row py-4">
     <div class="d-grid gap-2 col-12 col-sm-6 mx-auto">
-      <input type="submit" value="メモを<%= @memo['id'].blank? ? '保存' : '更新' %>する" class="btn btn-dark">
+      <input type="submit" value="メモを<%= @memo['id'].nil? ? '保存' : '更新' %>する" class="btn btn-dark">
     </div>
   </div>
 </form>

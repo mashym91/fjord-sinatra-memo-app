@@ -18,7 +18,7 @@ class Memo
     memos = []
     File.open(JSON_FILE, 'r') do |file|
       hash = JSON.parse(file.read)
-      memos = hash['memos'] if hash.present?
+      memos = hash['memos']
     end
     memos
   end
@@ -29,7 +29,7 @@ class Memo
 
   def save
     memos = Memo.all
-    @memo['id'] = memos.present? ? memos.last['id'] + 1 : 1
+    @memo['id'] = memos.empty? ? 1 : memos.last['id'] + 1
     @memo['created_at'] = Time.now.to_s
     @memo['updated_at'] = Time.now.to_s
     @memo['deleted_at'] = nil
