@@ -8,10 +8,10 @@
   <% end %>
   <div class="row">
     <div class="col-12">
-      <label for="title" class="form-label">タイトル</label>
+      <label for="title" class="form-label">タイトル <span class="badge bg-light text-dark">必須</span></label>
       <input type="text" class="form-control" name="title" id="title" value=<%= @memo['title'] %>>
     </div>
-    <div class="col-12">
+    <div class="col-12 mt-2">
       <label for="body" class="form-label">内容</label>
       <textarea class="form-control" name="body" id="body" rows="10"><%= @memo['body'] %></textarea>
     </div>
