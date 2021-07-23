@@ -60,7 +60,7 @@ class AppTest < Minitest::Test
     memos = []
     File.open(JSON_FILE, 'r') do |file|
       hash = JSON.parse(file.read)
-      memos = hash['memos'] if hash.present?
+      memos = hash['memos']
     end
     assert_equal memos.last['title'], 'テストタイトル'
     assert_equal memos.last['body'], 'テストメモ'
@@ -85,7 +85,7 @@ class AppTest < Minitest::Test
     memos = []
     File.open(JSON_FILE, 'r') do |file|
       hash = JSON.parse(file.read)
-      memos = hash['memos'] if hash.present?
+      memos = hash['memos']
     end
 
     assert_equal memos.last['title'], '更新テストタイトル'
@@ -103,7 +103,7 @@ class AppTest < Minitest::Test
     memos = []
     File.open(JSON_FILE, 'r') do |file|
       hash = JSON.parse(file.read)
-      memos = hash['memos'] if hash.present?
+      memos = hash['memos']
     end
     assert memos.last['deleted_at'].nil? == false
 
