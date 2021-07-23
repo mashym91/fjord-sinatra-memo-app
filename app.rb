@@ -43,7 +43,7 @@ end
 
 post '/memos' do
   if validate_ok?(params)
-    memo = Memo.new({ title: h(params[:title]), body: h(params[:body]) })
+    memo = Memo.new(title: h(params[:title]), body: h(params[:body]))
     memo.save
 
     flash[:message] = '登録しました'
@@ -62,7 +62,7 @@ end
 
 patch '/memos/:id' do
   if validate_ok?(params)
-    memo = Memo.new({ id: params[:id].to_i, title: h(params[:title]), body: h(params[:body]) })
+    memo = Memo.new(id: params[:id].to_i, title: h(params[:title]), body: h(params[:body]))
     memo.update
 
     flash[:message] = '更新しました'
@@ -76,7 +76,7 @@ patch '/memos/:id' do
 end
 
 delete '/memos/:id' do
-  memo = Memo.new({ id: params[:id].to_i })
+  memo = Memo.new(id: params[:id].to_i)
   memo.destroy
 
   flash[:message] = '削除しました'
